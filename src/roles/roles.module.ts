@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { RolesController } from './roles.controller';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { Roles } from './models/roles.model';
+import { Roles } from './entity/roles.entity';
 import { UserRoles } from './user-roles.model';
-import { User } from 'src/users/models/users.model';
+import { User } from 'src/users/entity/users.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   providers: [RolesService],
   controllers: [RolesController],
-  imports: [SequelizeModule.forFeature([Roles, User, UserRoles])],
+  imports: [TypeOrmModule.forFeature([Roles, User])],
   exports: [RolesService],
 })
 export class RolesModule {}

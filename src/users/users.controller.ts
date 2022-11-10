@@ -7,7 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateUserDto, GiveRoleDto } from './dto/create-user.dto';
-import { User } from './models/users.model';
+import { User } from './entity/users.entity';
 import { UsersService } from './users.service';
 
 @ApiTags('Users api')
@@ -49,12 +49,12 @@ export class UsersController {
     return this.userService.giveNewRole(body.email, body.roleId);
   }
 
-  @ApiOperation({ summary: 'Remove one role for user' })
-  @ApiBearerAuth()
-  @ApiResponse({ status: 201, type: [User] })
-  @UseGuards(JwtAuthGuard)
-  @Post('/role/remove')
-  removeOneRole(@Body() body: GiveRoleDto) {
-    return this.userService.removeOneRole(body.email, body.roleId);
-  }
+  // @ApiOperation({ summary: 'Remove one role for user' })
+  // @ApiBearerAuth()
+  // @ApiResponse({ status: 201, type: [User] })
+  // @UseGuards(JwtAuthGuard)
+  // @Post('/role/remove')
+  // removeOneRole(@Body() body: GiveRoleDto) {
+  //   return this.userService.removeOneRole(body.email, body.roleId);
+  // }
 }

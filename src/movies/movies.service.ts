@@ -24,9 +24,7 @@ export class MoviesService {
   ) {}
 
   async getAllCategories() {
-    console.log(2222);
     const result = await this.categoryRepository.findAll();
-    console.log(3333, result);
 
     return result;
   }
