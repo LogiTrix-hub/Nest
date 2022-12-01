@@ -16,7 +16,7 @@ export class RolesService {
   }
 
   async getRoleByValue(value: string) {
-    const response = this.rolesRepository.findBy({ value });
+    const response = this.rolesRepository.findOneBy({ value });
     return response;
   }
 

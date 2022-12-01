@@ -55,9 +55,11 @@ export class AuthService {
       userDto.password,
       user?.password || '',
     );
-    if (user && passwordEquals) {
-      return user;
+    if (!user && !passwordEquals) {
+      throw new UnauthorizedException({
+        message: 'Incorrect email or password',
+      });
     }
-    throw new UnauthorizedException({ message: 'Incorrect email or password' });
+    return user;
   }
 }

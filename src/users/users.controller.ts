@@ -25,7 +25,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Users list' })
   @ApiBearerAuth()
   @ApiResponse({ status: 200, type: [User] })
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get()
   getAll() {
     return this.userService.getAllUsers();
@@ -34,8 +34,8 @@ export class UsersController {
   @ApiOperation({ summary: 'Particular user' })
   @ApiBearerAuth()
   @ApiResponse({ status: 200, type: [User] })
-  @UseGuards(JwtAuthGuard)
-  @Get()
+  // @UseGuards(JwtAuthGuard)
+  @Get('email')
   getOne(@Param('email') email: string) {
     return this.userService.getUserByEmail(email);
   }
@@ -43,7 +43,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Give new role for user' })
   @ApiBearerAuth()
   @ApiResponse({ status: 201, type: [User] })
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('/role')
   giveRoleUser(@Body() body: GiveRoleDto) {
     return this.userService.giveNewRole(body.email, body.roleId);

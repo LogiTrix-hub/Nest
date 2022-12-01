@@ -15,7 +15,7 @@ export class User {
   id: number;
 
   @ApiProperty({ example: 'example@gmail.com', description: 'Email of user' })
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   email: string;
 
   @ApiProperty({ example: 'pass1234', description: 'Password of user' })

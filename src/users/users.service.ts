@@ -15,8 +15,8 @@ export class UsersService {
     try {
       const user = await this.userRepository.create(dto);
       const role = await this.rolesService.getRoleByValue('USER');
-      // await user.$set('roles', [role.id]);
-      // user.roles = [role];
+      user.roles = [role];
+      await this.userRepository.save(user);
       return user;
     } catch (err) {
       const [error] = err.errors;
@@ -31,21 +31,34 @@ export class UsersService {
   }
 
   async getUserByEmail(email: string) {
-    const user = await this.userRepository.findOneBy({ email });
+    const user = await this.userRepository.findOneBy({
+      email,
+    });
+    const userResults = await this.userRepository
+      .createQueryBuilder()
+      .select('user')
+      .from(User, 'user')
+      // .leftJoinAndSelect('user.roles', 'roles')
+      .where('user.email = :id', { id: email })
+      .getOne();
+    // .select('user.email', email)
+    console.log(3333, userResults, user);
+
     return user;
   }
 
   async giveNewRole(email: string, roleId: number) {
     const user = await this.getUserByEmail(email);
-    // const prevRoles = user.roles.map((i) => i.id);
-    console.log(user);
-
-    // await user.$set('roles', [...prevRoles, roleId]);
+    const role = await this.rolesService.getRoleById(roleId);
+    // user.roles.push(role);
+    await this.userRepository.save(user);
+    return user;
   }
 
-  // async removeOneRole(email: string, roleId: number) {
-  //   const user = await this.getUserByEmail(email);
-  //   const updatedRoles = user.roles.filter((i) => i.id !== roleId);
-  //   // await user.$set('roles', updatedRoles);
-  // }
+  async removeOneRole(email: string, roleId: number) {
+    const user = await this.getUserByEmail(email);
+    // user.roles = user.roles.filter((i) => i.id !== roleId);
+    await this.userRepository.save(user);
+    return user;
+  }
 }

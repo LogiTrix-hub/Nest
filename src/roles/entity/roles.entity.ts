@@ -21,8 +21,4 @@ export class Roles {
   @ApiProperty({ example: 'Administrator', description: 'Description of role' })
   @Column({ nullable: false })
   description: string;
-
-  @ManyToMany(() => User)
-  @JoinTable()
-  roles: User[];
 }
