@@ -8,7 +8,6 @@ export class CinemasService {
   constructor(@InjectModel(Cinema) private cinemasRepository: typeof Cinema) {}
 
   async getAllCinemas() {
-    console.log(2222);
     const result = await this.cinemasRepository.findAll();
     console.log(3333, result);
 
